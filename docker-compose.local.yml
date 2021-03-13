@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  simple-twitter-restful-redis:
+    container_name: simple-twitter-restful-redis
+    image: redis:5
+    command: redis-server --appendonly yes
+    ports:
+      - '6388:6379'
+    volumes:
+      - ./data/redis_data:/data
+    networks:
+      - simple-twitter-restful
+  simple-twitter-restful-mysql:
+    container_name: simple-twitter-restful-mysql
+    image: mysql:5.7.22
+    # volumes:
+    # - ./data/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_DATABASE: simpleTwitter-local
+      MYSQL_PASSWORD: root
+    restart: always
+    ports:
+      - '3326:3306'
+    networks:
+      - simple-twitter-restful
+volumes:
+  redis_data:
+    driver: local
+networks:
+  simple-twitter-restful:
+    driver: bridge

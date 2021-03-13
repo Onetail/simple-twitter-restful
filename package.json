@@ -20,9 +20,10 @@
     }
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-simple-twitter-restful",
-    "stop": "egg-scripts stop --title=egg-server-simple-twitter-restful",
-    "dev": "egg-bin dev",
+    "start:prod": "run(){ EGG_SERVER_ENV=production egg-scripts start --sticky --env=prod --port=$1  --title=simple-twitter-restful-server;}; run",
+    "start": "EGG_SERVER_ENV=local egg-scripts start --sticky --env=local --port=7015    --title=simple-twitter-restful-server  ",
+    "stop": "egg-scripts stop --title=egg-server-simple-twitter-restful-server",
+    "dev": "EGG_SERVER_ENV=local egg-bin dev --sticky --port=7015",
     "debug": "egg-bin debug",
     "test-local": "egg-bin test",
     "test": "npm run lint -- --fix && npm run test-local",

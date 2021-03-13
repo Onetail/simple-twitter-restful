@@ -1,0 +1,151 @@
+version: '3'
+
+services:
+  simple-twitter-restful-redis:
+    container_name: simple-twitter-restful-redis
+    image: redis:5
+    command: redis-server --appendonly yes
+    volumes:
+      - ./data/redis_data:/data
+    networks:
+      - simple-twitter-restful
+
+  simple-twitter-restful-mysql-master:
+    container_name: simple-twitter-restful-mysql-master
+    build:
+      context: .
+      dockerfile: docker/mysql/master/Dockerfile
+    command: --server-id=1 --log-bin=mysql-bin --sync_binlog=1  --sql_mode=""
+    restart: unless-stopped
+    volumes:
+      - ./docker/mysql-master.sh:/docker-entrypoint-initdb.d/master.sh
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_DATABASE: simpleTwitter
+      MYSQL_PASSWORD: root
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - '3326:3306'
+    networks:
+      - simple-twitter-restful
+
+  simple-twitter-restful-mysql-slave:
+    build:
+      context: .
+      dockerfile: docker/mysql/slave/Dockerfile
+    container_name: simple-twitter-restful-mysql-slave
+    command: --server-id=2 --log-bin=mysql-slave-bin --read_only=1 --sql_mode=""
+    volumes:
+      - ./sql/slave/simple-twitter-restful.prod.sql:/docker-entrypoint-initdb.d/simple-twitter-restful.prod.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_DATABASE: simpleTwitter
+      MYSQL_PASSWORD: root
+    depends_on:
+      - simple-twitter-restful-mysql-master
+    ports:
+      - '3327:3306'
+    networks:
+      - simple-twitter-restful
+  simple-twitter-restful-nodejs_1:
+    container_name: simple-twitter-restful-nodejs_1
+    build:
+      context: .
+      dockerfile: docker/nodejs/Dockerfile
+    environment:
+      - MYSQL_DATABASE=simpleTwitter
+      - MYSQL_MASTER_HOST=simple-twitter-restful-mysql-master
+      - MYSQL_MASTER_USER=root
+      - MYSQL_MASTER_PASSWORD=root
+      - MYSQL_SLAVE_HOST=simple-twitter-restful-mysql-slave
+      - MYSQL_SLAVE_USER=root
+      - MYSQL_SLAVE_PASSWORD=root
+      - MYSQL_PORT=3306
+      - REDIS_HOST=simple-twitter-restful-redis
+      - REDIS_PORT=6379
+
+    restart: always
+    volumes:
+      - './app/public/uploads:/app/app/public/uploads'
+      - './logs:/home/backend/log'
+    ports:
+      - '7015:7015'
+    entrypoint: /entrypoint.sh -d simple-twitter-restful-mysql-master:3306 -c 'yarn build && yarn tsc && yarn migration:run:prod && yarn start:prod 7015';
+    links:
+      - simple-twitter-restful-mysql-master
+      - simple-twitter-restful-mysql-slave
+      - simple-twitter-restful-redis
+    networks:
+      - simple-twitter-restful
+
+  simple-twitter-restful-nodejs_2:
+    container_name: simple-twitter-restful-nodejs_2
+    build:
+      context: .
+      dockerfile: docker/nodejs/Dockerfile
+    environment:
+      - MYSQL_DATABASE=simpleTwitter
+      - MYSQL_MASTER_HOST=simple-twitter-restful-mysql-master
+      - MYSQL_MASTER_USER=root
+      - MYSQL_MASTER_PASSWORD=root
+      - MYSQL_SLAVE_HOST=simple-twitter-restful-mysql-slave
+      - MYSQL_SLAVE_USER=root
+      - MYSQL_SLAVE_PASSWORD=root
+      - MYSQL_PORT=3306
+      - REDIS_HOST=simple-twitter-restful-redis
+      - REDIS_PORT=6379
+
+    restart: always
+    volumes:
+      - './app/public/uploads:/app/app/public/uploads'
+      - './logs:/home/backend/log'
+    ports:
+      - '7016:7016'
+    entrypoint: /entrypoint.sh -d simple-twitter-restful-mysql-master:3306 -c 'yarn build && yarn tsc && yarn migration:run:prod && yarn start:prod 7016';
+    links:
+      - simple-twitter-restful-mysql-master
+      - simple-twitter-restful-mysql-slave
+      - simple-twitter-restful-redis
+    networks:
+      - simple-twitter-restful
+
+  simple-twitter-restful-nodejs_3:
+    container_name: simple-twitter-restful-nodejs_3
+    build:
+      context: .
+      dockerfile: docker/nodejs/Dockerfile
+    environment:
+      - MYSQL_DATABASE=simpleTwitter
+      - MYSQL_MASTER_HOST=simple-twitter-restful-mysql-master
+      - MYSQL_MASTER_USER=root
+      - MYSQL_MASTER_PASSWORD=root
+      - MYSQL_SLAVE_HOST=simple-twitter-restful-mysql-slave
+      - MYSQL_SLAVE_USER=root
+      - MYSQL_SLAVE_PASSWORD=root
+      - MYSQL_PORT=3306
+      - REDIS_HOST=simple-twitter-restful-redis
+      - REDIS_PORT=6379
+    restart: always
+    volumes:
+      - './app/public/uploads:/app/app/public/uploads'
+      - './logs:/home/backend/log'
+    ports:
+      - '7017:7017'
+    entrypoint: /entrypoint.sh -d simple-twitter-restful-mysql-master:3306 -c 'yarn build && yarn tsc && yarn migration:run:prod && yarn start:prod 7017';
+    links:
+      - simple-twitter-restful-mysql-master
+      - simple-twitter-restful-mysql-slave
+      - simple-twitter-restful-redis
+    networks:
+      - simple-twitter-restful
+volumes:
+  sql:
+    driver: local
+  redis_data:
+    driver: local
+networks:
+  simple-twitter-restful:
+    driver: bridge
