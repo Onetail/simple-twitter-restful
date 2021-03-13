@@ -1,0 +1,110 @@
+{
+  "name": "simple-twitter-restful",
+  "version": "1.0.0",
+  "description": "using restful like twitter style api",
+  "private": true,
+  "egg": {
+    "typescript": true,
+    "declarations": true
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "scripts": {
+    "start": "egg-scripts start --daemon --title=egg-server-simple-twitter-restful",
+    "stop": "egg-scripts stop --title=egg-server-simple-twitter-restful",
+    "dev": "egg-bin dev",
+    "debug": "egg-bin debug",
+    "test-local": "egg-bin test",
+    "test": "npm run lint -- --fix && npm run test-local",
+    "cov": "egg-bin cov",
+    "tsc": "ets && tsc -p tsconfig.json",
+    "ci": "npm run lint && npm run cov && npm run tsc",
+    "autod": "autod",
+    "lint": "eslint . --ext .ts",
+    "clean": "ets clean",
+    "build": "mkdir -p api-docs/public/json && touch api-docs/public/json/main.json",
+    "migration:init": "npx sequelize init:config && npx sequelize init:migrations",
+    "migration:create": "run(){ NODE_ENV=local npx sequelize migration:generate --name=$1; }; run",
+    "migration:run": "NODE_ENV=local npx sequelize db:migrate",
+    "migration:undo": "NODE_ENV=local npx sequelize db:migrate:undo",
+    "migration:remove": "NODE_ENV=local npx sequelize db:migrate:undo:all",
+    "migration:run:prod": "NODE_ENV=production npx sequelize db:migrate",
+    "migration:run:dev": "NODE_ENV=development npx sequelize db:migrate",
+    "migration:run:stag": "NODE_ENV=staging npx sequelize db:migrate",
+    "migration:undo:prod": "NODE_ENV=production npx sequelize db:migrate:undo",
+    "migration:remove:prod": "NODE_ENV=production npx sequelize db:migrate:undo:all",
+    "migration:remove:dev": "NODE_ENV=development npx sequelize db:migrate:undo:all",
+    "migration:remove:stag": "NODE_ENV=staging npx sequelize db:migrate:undo:all",
+    "seeder:init": "npx sequelize init:seeders",
+    "seeder:create": "run(){ NODE_ENV=local npx sequelize seed:generate --name=$1; }; run",
+    "seeder:run": "NODE_ENV=local npx sequelize db:seed:all",
+    "seeder:undo": "NODE_ENV=local npx sequelize db:seed:undo",
+    "seeder:remove": "NODE_ENV=local npx sequelize db:seed:undo:all",
+    "seeder:run:prod": "NODE_ENV=production npx sequelize db:seed:all",
+    "seeder:run:dev": "NODE_ENV=development npx sequelize db:seed:all",
+    "seeder:run:stag": "NODE_ENV=staging npx sequelize db:seed:all",
+    "retest": "npm run migration:remove && npm run migration:run && npm run seeder:run"
+  },
+  "dependencies": {
+    "egg": "^2.6.1",
+    "egg-scripts": "^2.6.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.2.0",
+    "egg-cors": "^2.2.3",
+    "egg-jwt": "^3.1.7",
+    "egg-redis": "^2.4.0",
+    "egg-sequelize": "^5.2.1",
+    "egg-shell-decorators": "1.0.7",
+    "egg-socket.io": "^4.1.6",
+    "egg-swagger": "^1.1.2",
+    "egg-validate": "^2.0.2",
+    "egg-view-nunjucks": "^2.2.0",
+    "moment": "^2.27.0",
+    "mysql2": "^2.1.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.40",
+    "@types/node": "^7.0.12",
+    "@types/supertest": "^2.0.0",
+    "autod": "^3.0.1",
+    "autod-egg": "^1.1.0",
+    "egg-ci": "^1.8.0",
+    "egg-bin": "^4.11.0",
+    "egg-mock": "^3.16.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.6",
+    "prettier": "^2.0.5",
+    "sequelize-cli": "^5.5.1",
+    "tslib": "^1.9.0",
+    "tslint": "^5.0.0",
+    "eslint": "^6.7.2",
+    "eslint-config-egg": "^8.0.0",
+    "typescript": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=8.9.0"
+  },
+  "ci": {
+    "version": "8"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "eslintIgnore": [
+    "coverage"
+  ],
+  "author": "WayneChu",
+  "license": "MIT"
+}
