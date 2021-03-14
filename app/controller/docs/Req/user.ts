@@ -8,3 +8,10 @@ export const UserIdRequiredQuery = {
     description: 'user ID',
   },
 };
+
+export const UserAuthorizationDocs = {
+  name: 'authorization',
+  in: 'authorization',
+  required: true,
+  description: `Need authorization token`,
+};

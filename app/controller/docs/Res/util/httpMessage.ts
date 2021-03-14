@@ -24,6 +24,16 @@ export const errorMsg = {
     example: 'Not found the userId',
     description: '找不到 userId',
   },
+  4001: {
+    type: 'string',
+    example: 'Cannot follow youself',
+    description: 'userId 與 token userId 相同',
+  },
+  4002: {
+    type: 'string',
+    example: 'Already follow this user',
+    description: '已經 follow 過該 user',
+  },
 };
 
 export const successUpdateResponse = {

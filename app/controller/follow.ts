@@ -23,7 +23,7 @@ export default class FollowController extends Controller {
   @Parameters([...FollowPagenationParams, UserIdRequiredQuery])
   @Responses({
     200: {
-      description: 'get user list',
+      description: 'get userFollow list',
       schema: {
         ...GetUserFollowResponse,
       },

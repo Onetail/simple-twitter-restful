@@ -6,6 +6,8 @@ const UserFollowListAttributes = [
   [literal('`user`.`name`'), 'name'],
 ];
 
+const UserFollowExistAttributes = ['userId', 'followId'];
+
 export default class UserFollow extends Service {
   public async findListUserFollowsByUserId(
     userId: number,
@@ -36,6 +38,32 @@ export default class UserFollow extends Service {
       offset: count * page,
       order: [[order, sort]],
     });
+    return data;
+  }
+
+  public async findOneUserFollowsByUserId(userId: number, followId: number) {
+    const data = await this.ctx.model.UserFollow.findOne({
+      attributes: UserFollowExistAttributes,
+      where: {
+        userId,
+        followId,
+      },
+    });
+    return data;
+  }
+
+  public async createOneForFriendShip(
+    userId: number,
+    followId: number,
+    { transaction } = { transaction: null },
+  ) {
+    const data = await this.ctx.model.UserFollow.create(
+      {
+        userId,
+        followId,
+      },
+      { transaction },
+    );
     return data;
   }
   public async deleteAllUserFollow() {

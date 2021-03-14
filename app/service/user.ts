@@ -23,6 +23,14 @@ export default class UserFollow extends Service {
     return data;
   }
 
+  public async findOneUserByName(name: string) {
+    const data = await this.ctx.model.User.findOne({
+      attributes: UserAttributes,
+      where: { name },
+    });
+    return data;
+  }
+
   public async findOneUserExistByUserId(userId: number) {
     const data = await this.ctx.model.User.findOne({
       attributes: UserExistAttributes,
@@ -30,6 +38,19 @@ export default class UserFollow extends Service {
         id: userId,
       },
     });
+    return data;
+  }
+
+  public async createOneForUser(
+    name: string,
+    { transaction } = { transaction: null },
+  ) {
+    const data = await this.ctx.model.User.create(
+      {
+        name,
+      },
+      { transaction },
+    );
     return data;
   }
 
