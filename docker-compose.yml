@@ -69,7 +69,6 @@ services:
 
     restart: always
     volumes:
-      - './app/public/uploads:/app/app/public/uploads'
       - './logs:/home/backend/log'
     ports:
       - '7015:7015'
@@ -100,7 +99,6 @@ services:
 
     restart: always
     volumes:
-      - './app/public/uploads:/app/app/public/uploads'
       - './logs:/home/backend/log'
     ports:
       - '7016:7016'
@@ -130,7 +128,6 @@ services:
       - REDIS_PORT=6379
     restart: always
     volumes:
-      - './app/public/uploads:/app/app/public/uploads'
       - './logs:/home/backend/log'
     ports:
       - '7017:7017'
