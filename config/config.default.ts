@@ -36,7 +36,7 @@ export default (appInfo: EggAppInfo) => {
   config.swagger = {
     enable: true,
     mountPath: '/docs', // swagger-ui  address  <domain>/test-mount
-    swaggerFilePath: '/api/v1/api-docs/public/json/main.json', // swagger file default path
+    swaggerFilePath: '/1.0/api-docs/public/json/main.json', // swagger file default path
     enableGoogleFont: false,
   };
 
