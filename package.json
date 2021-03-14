@@ -31,7 +31,7 @@
     "tsc": "ets && tsc -p tsconfig.json",
     "ci": "npm run lint && npm run cov && npm run tsc",
     "autod": "autod",
-    "lint": "eslint . --ext .ts",
+    "lint": "tslint --fix --force --project . -c tslint.json",
     "clean": "ets clean",
     "build": "mkdir -p api-docs/public/json && touch api-docs/public/json/main.json",
     "migration:init": "npx sequelize init:config && npx sequelize init:migrations",
