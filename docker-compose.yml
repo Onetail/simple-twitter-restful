@@ -141,6 +141,18 @@ services:
       - simple-twitter-restful-redis
     networks:
       - simple-twitter-restful
+  simple-twitter-restful-nginx:
+    image: nginx
+    ports:
+      - '7018:7018'
+    restart: unless-stopped
+    container_name: simple-twitter-restful-nginx
+    volumes:
+      - ./docker/nginx:/etc/nginx/conf.d
+      - ./logs/nginx/:/var/log/nginx/
+    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
+    networks:
+      - simple-twitter-restful
 volumes:
   sql:
     driver: local
