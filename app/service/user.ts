@@ -2,7 +2,13 @@ import { Service } from 'egg';
 export const UserAttributes = ['id', 'name', 'createdAt'];
 export const UserExistAttributes = ['id'];
 
-export default class UserFollow extends Service {
+export default class User extends Service {
+  public async findAllIds() {
+    const data = await this.ctx.model.User.findAll({
+      attributes: UserExistAttributes,
+    });
+    return data;
+  }
   public async findListUsersByUserId({
     count,
     page,

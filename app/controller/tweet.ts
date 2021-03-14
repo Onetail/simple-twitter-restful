@@ -48,6 +48,10 @@ export default class TweetController extends Controller {
     const data: PagenationDTO = query;
     const { sort, count, page, order } = data;
     const { userId } = query;
+    let result: {
+      rows: Array<object>;
+      count: number;
+    } = { rows: [], count: 0 };
 
     const isUser = await ctx.service.user.findOneUserExistByUserId(userId);
     if (!isUser) {
@@ -57,12 +61,26 @@ export default class TweetController extends Controller {
       );
     }
 
-    const result = await ctx.service.tweet.findListTweetsByUserId(userId, {
-      sort,
-      count,
-      page,
-      order,
-    });
+    const tweetCount = await this.app.redis.get(
+      `${this.app.config.redisSet.keys.tweetCount}:${userId}`,
+    );
+
+    if (!tweetCount) {
+      result = await ctx.service.tweet.findListAndCountTweetsByUserId(userId, {
+        sort,
+        count,
+        page,
+        order,
+      });
+    } else {
+      result.rows = await ctx.service.tweet.findListTweetsByUserId(userId, {
+        sort,
+        count,
+        page,
+        order,
+      });
+      result.count = Number(tweetCount);
+    }
 
     ctx.body = { body: result.rows, page, total: result.count };
   }
@@ -87,6 +105,10 @@ export default class TweetController extends Controller {
       title,
       content,
     });
+
+    await this.app.redis.incr(
+      `${this.app.config.redisSet.keys.tweetCount}:${ctx.userInfo.id}`,
+    );
 
     ctx.body = { body: result };
   }

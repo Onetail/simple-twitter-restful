@@ -31,7 +31,7 @@ export default class FooBoot implements IBoot {
 
     await this.app.redis.flushall();
     const userList = await ctx.service.user.findAllIds();
-    console.log(userList);
+
     await Promise.all(
       userList.map(async (user) => {
         await this.app.redis.set(
