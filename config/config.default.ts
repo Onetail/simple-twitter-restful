@@ -41,9 +41,9 @@ export default (appInfo: EggAppInfo) => {
   };
 
   config.swaggerConfig = {
-    swaggerTitle: 'storm',
+    swaggerTitle: 'simple-twitter-restful',
     swaggerHost: 'localhost',
-    swaggerPort: 7009,
+    swaggerPort: 7015,
     swaggerVersion: '1.0.0',
     swaggerPath: {
       outPath: './api-docs/public/json/main.json',

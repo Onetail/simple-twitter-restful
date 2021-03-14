@@ -2,7 +2,7 @@ import { Application } from 'egg';
 import { EggShell } from 'egg-shell-decorators';
 
 export default (app: Application) => {
-  const apiVer = '/api/v1';
+  const apiVer = '/1.0/';
 
   EggShell(app, {
     prefix: apiVer,
