@@ -1,6 +1,6 @@
 'use strict';
 
-const tableName = 'tweets';
+const tableName = 'userFollows';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const { DATE, INTEGER, STRING } = Sequelize;
@@ -16,8 +16,14 @@ module.exports = {
             key: 'id',
           },
         },
-        title: { type: STRING },
-        content: { type: STRING },
+        followId: {
+          type: INTEGER,
+          allowNull: false,
+          references: {
+            model: 'users',
+            key: 'id',
+          },
+        },
         createdAt: { type: DATE, defaultValue: Sequelize.literal('NOW()') },
         updatedAt: {
           type: DATE,

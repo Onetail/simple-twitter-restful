@@ -1,6 +1,6 @@
 'use strict';
 
-const tableName = 'tweets';
+const tableName = 'userFollows';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     return await queryInterface.bulkInsert(
@@ -8,21 +8,8 @@ module.exports = {
       [
         {
           id: 1,
-          title: 'testA',
-          content: 'testA content',
           userId: 1,
-        },
-        {
-          id: 2,
-          title: 'testB',
-          content: 'testC content',
-          userId: 2,
-        },
-        {
-          id: 3,
-          title: 'testAA',
-          content: 'testAA content',
-          userId: 1,
+          followId: 2,
         },
       ],
       {},
