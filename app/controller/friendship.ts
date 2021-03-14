@@ -54,6 +54,7 @@ export default class FriendShipController extends Controller {
   public async postNewFriendships({ query }) {
     const { ctx } = this;
     const { userId } = query;
+    let result;
 
     if (String(ctx.userInfo.id) === userId) {
       throw ctx.app.errorHandler(
@@ -80,9 +81,23 @@ export default class FriendShipController extends Controller {
       );
     }
 
-    const result = await ctx.service.userFollow.createOneForFriendShip(
-      ctx.userInfo.id,
-      userId,
+    const transaction = await ctx.model.transaction();
+
+    try {
+      result = await ctx.service.userFollow.createOneForFriendShip(
+        ctx.userInfo.id,
+        userId,
+        { transaction },
+      );
+
+      transaction.commit();
+    } catch (err) {
+      await transaction.rollback();
+      throw ctx.app.errorHandler(ctx.app.Error.ERR_NOT_ALLOWED, err);
+    }
+
+    await this.app.redis.incr(
+      `${this.app.config.redisSet.keys.userFollowCount}:${ctx.userInfo.id}`,
     );
 
     ctx.body = { body: result };

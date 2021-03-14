@@ -101,10 +101,25 @@ export default class TweetController extends Controller {
     const data: TweetDTO = query;
     const { title, content } = data;
 
-    const result = await ctx.service.tweet.createOneForTweet(ctx.userInfo.id, {
-      title,
-      content,
-    });
+    let result;
+
+    const transaction = await ctx.model.transaction();
+
+    try {
+      result = await ctx.service.tweet.createOneForTweet(
+        ctx.userInfo.id,
+        {
+          title,
+          content,
+        },
+        { transaction },
+      );
+
+      transaction.commit();
+    } catch (err) {
+      await transaction.rollback();
+      throw ctx.app.errorHandler(ctx.app.Error.ERR_NOT_ALLOWED, err);
+    }
 
     await this.app.redis.incr(
       `${this.app.config.redisSet.keys.tweetCount}:${ctx.userInfo.id}`,

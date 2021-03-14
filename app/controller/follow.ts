@@ -43,6 +43,10 @@ export default class FollowController extends Controller {
     const data: PagenationDTO = query;
     const { sort, count, page, order } = data;
     const { userId } = query;
+    let result: {
+      rows: Array<object>;
+      count: number;
+    } = { rows: [], count: 0 };
 
     const isUser = await ctx.service.user.findOneUserExistByUserId(userId);
     if (!isUser) {
@@ -51,15 +55,33 @@ export default class FollowController extends Controller {
         errorMsg[4000].example,
       );
     }
-    const result = await ctx.service.userFollow.findListUserFollowsByUserId(
-      userId,
-      {
-        sort,
-        count,
-        page,
-        order,
-      },
+
+    const userFollowCount = await this.app.redis.get(
+      `${this.app.config.redisSet.keys.userFollowCount}:${userId}`,
     );
+
+    if (!userFollowCount) {
+      result = await ctx.service.userFollow.findListUserFollowsByUserId(
+        userId,
+        {
+          sort,
+          count,
+          page,
+          order,
+        },
+      );
+    } else {
+      result.rows = await ctx.service.userFollow.findListUserFollowsByUserId(
+        userId,
+        {
+          sort,
+          count,
+          page,
+          order,
+        },
+      );
+      result.count = Number(userFollowCount);
+    }
 
     ctx.body = { body: result.rows, page, total: result.count };
   }

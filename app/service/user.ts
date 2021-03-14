@@ -49,13 +49,13 @@ export default class User extends Service {
 
   public async createOneForUser(
     name: string,
-    { transaction } = { transaction: null },
+    optional: { transaction: any } = { transaction: null },
   ) {
     const data = await this.ctx.model.User.create(
       {
         name,
       },
-      { transaction },
+      { transaction: optional!!.transaction },
     );
     return data;
   }

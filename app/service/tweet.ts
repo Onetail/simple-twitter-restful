@@ -79,7 +79,7 @@ export default class Tweet extends Service {
   public async createOneForTweet(
     userId: number,
     { title, content }: { title: string; content: string },
-    { transaction } = { transaction: null },
+    optional: { transaction: any } = { transaction: null },
   ) {
     const data = await this.ctx.model.Tweet.create(
       {
@@ -87,7 +87,7 @@ export default class Tweet extends Service {
         title,
         content,
       },
-      { fields: TweetListAttributes, transaction },
+      { fields: TweetListAttributes, transaction: optional!!.transaction },
     );
     return data;
   }

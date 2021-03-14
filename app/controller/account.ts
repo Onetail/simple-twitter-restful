@@ -35,7 +35,16 @@ export default class AccountController extends Controller {
     result = await ctx.service.user.findOneUserByName(name);
 
     if (!result) {
-      result = await ctx.service.user.createOneForUser(name);
+      const transaction = await ctx.model.transaction();
+
+      try {
+        result = await ctx.service.user.createOneForUser(name);
+
+        transaction.commit();
+      } catch (err) {
+        await transaction.rollback();
+        throw ctx.app.errorHandler(ctx.app.Error.ERR_NOT_ALLOWED, err);
+      }
     }
 
     const token = await ctx.app.jwt.sign(

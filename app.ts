@@ -38,6 +38,11 @@ export default class FooBoot implements IBoot {
           `${this.app.config.redisSet.keys.tweetCount}:${user.id}`,
           await ctx.service.tweet.countTweetsByUserId(user.id),
         );
+
+        await this.app.redis.set(
+          `${this.app.config.redisSet.keys.userFollowCount}:${user.id}`,
+          await ctx.service.userFollow.countUserFollowsByUserId(user.id),
+        );
       }),
     );
   }

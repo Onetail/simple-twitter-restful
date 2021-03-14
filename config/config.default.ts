@@ -82,6 +82,7 @@ export default (appInfo: EggAppInfo) => {
     DECR: 1,
     keys: {
       tweetCount: 'tweetCount',
+      userFollowCount: 'userFollowCount',
     },
   };
 
