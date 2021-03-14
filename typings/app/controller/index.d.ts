@@ -2,12 +2,18 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
+import ExportAccount from '../../../app/controller/account';
 import ExportApi from '../../../app/controller/api';
 import ExportFollow from '../../../app/controller/follow';
+import ExportFriendship from '../../../app/controller/friendship';
+import ExportDtoAccount from '../../../app/controller/dto/account';
 import ExportDtoFollow from '../../../app/controller/dto/follow';
 import ExportDtoPagenation from '../../../app/controller/dto/pagenation';
+import ExportDtoUser from '../../../app/controller/dto/user';
 import ExportEnumDatabase from '../../../app/controller/enum/database';
+import ExportDocsReqAccount from '../../../app/controller/docs/Req/account';
 import ExportDocsReqUser from '../../../app/controller/docs/Req/user';
+import ExportDocsResAccount from '../../../app/controller/docs/Res/account';
 import ExportDocsResFollow from '../../../app/controller/docs/Res/follow';
 import ExportDocsResUser from '../../../app/controller/docs/Res/user';
 import ExportDocsReqUtilPagenation from '../../../app/controller/docs/Req/util/pagenation';
@@ -17,23 +23,29 @@ import ExportDocsResUtilPagenation from '../../../app/controller/docs/Res/util/p
 
 declare module 'egg' {
   interface IController {
+    account: ExportAccount;
     api: ExportApi;
     follow: ExportFollow;
+    friendship: ExportFriendship;
     dto: {
+      account: ExportDtoAccount;
       follow: ExportDtoFollow;
       pagenation: ExportDtoPagenation;
+      user: ExportDtoUser;
     }
     enum: {
       database: ExportEnumDatabase;
     }
     docs: {
       req: {
+        account: ExportDocsReqAccount;
         user: ExportDocsReqUser;
         util: {
           pagenation: ExportDocsReqUtilPagenation;
         }
       }
       res: {
+        account: ExportDocsResAccount;
         follow: ExportDocsResFollow;
         user: ExportDocsResUser;
         util: {

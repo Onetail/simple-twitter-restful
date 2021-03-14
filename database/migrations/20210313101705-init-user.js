@@ -19,6 +19,10 @@ module.exports = {
         charset: 'utf8', // default: null
       },
     );
+    queryInterface.addConstraint(tableName, ['name'], {
+      type: 'unique',
+      name: 'user_name_unique_constraint',
+    });
   },
 
   down: async (queryInterface, Sequelize) => {

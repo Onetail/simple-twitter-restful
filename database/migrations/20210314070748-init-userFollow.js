@@ -34,6 +34,10 @@ module.exports = {
         charset: 'utf8', // default: null
       },
     );
+    queryInterface.addConstraint(tableName, ['userId', 'followId'], {
+      type: 'unique',
+      name: 'user_follow_userId_followId_unique_constraint',
+    });
   },
 
   down: async (queryInterface, Sequelize) => {
