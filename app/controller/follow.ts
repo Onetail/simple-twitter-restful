@@ -33,8 +33,7 @@ export default class FollowController extends Controller {
       schema: {
         type: 'object',
         properties: {
-          body: errorMsg[4000],
-          code: { type: 'number', example: 4000 },
+          message: errorMsg[4000],
         },
       },
     },

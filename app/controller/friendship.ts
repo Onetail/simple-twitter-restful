@@ -27,24 +27,27 @@ export default class FriendShipController extends Controller {
       },
     },
     '403_1': {
-      type: 'object',
-      properties: {
-        body: errorMsg[4001],
-        code: { type: 'number', example: 4001 },
+      schema: {
+        type: 'object',
+        properties: {
+          message: errorMsg[4001],
+        },
       },
     },
     '403_2': {
-      type: 'object',
-      properties: {
-        body: errorMsg[4002],
-        code: { type: 'number', example: 4002 },
+      schema: {
+        type: 'object',
+        properties: {
+          message: errorMsg[4002],
+        },
       },
     },
     404: {
-      type: 'object',
-      properties: {
-        body: errorMsg[4000],
-        code: { type: 'number', example: 4000 },
+      schema: {
+        type: 'object',
+        properties: {
+          message: errorMsg[4000],
+        },
       },
     },
   })
