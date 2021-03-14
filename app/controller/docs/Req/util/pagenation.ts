@@ -1,4 +1,5 @@
 import { FollowColumnInOrderBy } from '../../../dto/follow';
+import { TweetColumnInOrderBy } from '../../../dto/tweet';
 import { DatabaseSort } from '../../../enum/database';
 
 const CountParams = {
@@ -55,9 +56,33 @@ const FollowParams = {
   },
 };
 
+const TweetParams = {
+  name: 'order',
+  in: 'query',
+  required: false,
+  schema: {
+    type: 'string',
+    example: Object.keys(TweetColumnInOrderBy)
+      .map((key) =>
+        typeof TweetColumnInOrderBy[key] === 'string'
+          ? TweetColumnInOrderBy[key]
+          : '',
+      )
+      .filter(Boolean),
+    description: 'get tweet column  ',
+  },
+};
+
 export const FollowPagenationParams = [
   CountParams,
   PageParams,
   FollowParams,
+  SortParams,
+];
+
+export const TweetPagenationParams = [
+  CountParams,
+  PageParams,
+  TweetParams,
   SortParams,
 ];

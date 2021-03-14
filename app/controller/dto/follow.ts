@@ -1,4 +1,4 @@
-export interface BannerDTO {
+export interface FollowDTO {
   readonly id: string;
   readonly userId: number;
   readonly followId: number;

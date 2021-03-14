@@ -1,15 +1,10 @@
 export const UserSigninRequest = {
-  name: 'body',
-  in: 'body',
+  name: 'name',
+  in: 'query',
   required: true,
   schema: {
-    type: 'object',
-    properties: {
-      name: {
-        type: 'string',
-        example: 'testName',
-        description: 'user name',
-      },
-    },
+    type: 'string',
+    example: 'testName',
+    description: 'user name',
   },
 };

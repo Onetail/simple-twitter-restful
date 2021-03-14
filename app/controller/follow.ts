@@ -45,6 +45,13 @@ export default class FollowController extends Controller {
     const { sort, count, page, order } = data;
     const { userId } = query;
 
+    const isUser = await ctx.service.user.findOneUserExistByUserId(userId);
+    if (!isUser) {
+      throw ctx.app.errorHandler(
+        ctx.app.Error.ERR_NOT_FOUND,
+        errorMsg[4000].example,
+      );
+    }
     const result = await ctx.service.userFollow.findListUserFollowsByUserId(
       userId,
       {

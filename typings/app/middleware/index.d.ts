@@ -6,6 +6,7 @@ import ExportValidateFollow from '../../../app/middleware/validateFollow';
 import ExportValidateIdParams from '../../../app/middleware/validateIdParams';
 import ExportValidateLogin from '../../../app/middleware/validateLogin';
 import ExportValidatePagenationQuery from '../../../app/middleware/validatePagenationQuery';
+import ExportValidateTweet from '../../../app/middleware/validateTweet';
 import ExportValidateUser from '../../../app/middleware/validateUser';
 
 declare module 'egg' {
@@ -14,6 +15,7 @@ declare module 'egg' {
     validateIdParams: typeof ExportValidateIdParams;
     validateLogin: typeof ExportValidateLogin;
     validatePagenationQuery: typeof ExportValidatePagenationQuery;
+    validateTweet: typeof ExportValidateTweet;
     validateUser: typeof ExportValidateUser;
   }
 }

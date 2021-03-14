@@ -15,7 +15,10 @@ export const GetUserResponse = {
   type: 'object',
   properties: {
     body: {
-      ...UserRO,
+      type: 'object',
+      properties: {
+        ...UserRO,
+      },
     },
   },
 };
