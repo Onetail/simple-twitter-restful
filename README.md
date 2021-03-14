@@ -1,15 +1,11 @@
-# hackernews-async-ts
-
-[Hacker News](https://news.ycombinator.com/) showcase using typescript && egg
-
-## QuickStart
+# Simple-twitter-restful
 
 ### Development
 
 ```bash
-$ npm i
-$ npm run dev
-$ open http://localhost:7001/
+$ docker-compose -f docker-compose.local.yml up --build -d
+$ yarn dev
+$ open http://localhost:7015/docs
 ```
 
 Don't tsc compile at development mode, if you had run `tsc` then you need to `npm run clean` before `npm run dev`.
@@ -17,8 +13,7 @@ Don't tsc compile at development mode, if you had run `tsc` then you need to `np
 ### Deploy
 
 ```bash
-$ npm run tsc
-$ npm start
+$ docker-compose up --build -d
 ```
 
 ### Npm Scripts
