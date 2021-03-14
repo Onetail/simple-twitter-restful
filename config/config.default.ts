@@ -81,12 +81,7 @@ export default (appInfo: EggAppInfo) => {
     INCR: 1,
     DECR: 1,
     keys: {
-      userCount: 'userCount',
-      userEmailAndPhoneVerify: 'userEmailAndPhoneVerify',
-      userKYCVerify: 'userKYCVerify',
-      userOnlineCount: 'userOnlineCount',
-      exchangeRate_USD_TWD: 'exchangeRate_USD_TWD',
-      exchangeRate_USD_CNY: 'exchangeRate_USD_CNY',
+      tweetCount: 'tweetCount',
     },
   };
 
@@ -95,12 +90,7 @@ export default (appInfo: EggAppInfo) => {
       enable: false,
       ignoreJSON: true,
     },
-    domainWhiteList: [
-      'http://localhost:7009',
-      'http://waynechu.synology.me:7009',
-      'http://localhost:7009/html/src/payment.html',
-      'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5',
-    ],
+    domainWhiteList: ['http://localhost:7015'],
   };
 
   config.logger = {
