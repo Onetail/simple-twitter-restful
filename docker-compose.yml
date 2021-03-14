@@ -21,9 +21,7 @@ services:
       - ./docker/mysql-master.sh:/docker-entrypoint-initdb.d/master.sh
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: root
       MYSQL_DATABASE: simpleTwitter
-      MYSQL_PASSWORD: root
     security_opt:
       - seccomp:unconfined
     ports:
@@ -37,13 +35,12 @@ services:
       dockerfile: docker/mysql/slave/Dockerfile
     container_name: simple-twitter-restful-mysql-slave
     command: --server-id=2 --log-bin=mysql-slave-bin --read_only=1 --sql_mode=""
+    restart: always
     volumes:
       - ./docker/mysql-slave.sh:/docker-entrypoint-initdb.d/slave.sh
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: root
       MYSQL_DATABASE: simpleTwitter
-      MYSQL_PASSWORD: root
     depends_on:
       - simple-twitter-restful-mysql-master
     ports:
