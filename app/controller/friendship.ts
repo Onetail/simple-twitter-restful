@@ -13,8 +13,8 @@ import { UserAuthorizationDocs, UserIdRequiredQuery } from './docs/Req/user';
 import { GetUserFollowResponse } from './docs/Res/follow';
 import { errorMsg } from './docs/Res/util/httpMessage';
 
-@TagsAll('friendships')
-@Prefix('friendships')
+@TagsAll('friendship')
+@Prefix('friendship')
 export default class FriendShipController extends Controller {
   @Before([validateLogin, validateUserIdRequiredQuery])
   @Post('/create')

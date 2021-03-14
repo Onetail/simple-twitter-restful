@@ -5,8 +5,8 @@ export default () => {
   config.sequelize = {
     dialect: 'mysql',
     host: process.env.MYSQL_HOST || '127.0.0.1',
-    port: 3315,
-    database: process.env.MYSQL_DATABASE || 'storm-dev',
+    port: 3326,
+    database: process.env.MYSQL_DATABASE || 'simpleTwitter-local',
     username: process.env.MYSQL_USER || 'root',
     password: process.env.MYSQL_PASSWORD || 'root',
     define: {
@@ -31,7 +31,7 @@ export default () => {
 
   config.redis = {
     client: {
-      port: 6383, // Redis port
+      port: 6388, // Redis port
       host: '127.0.0.1', // Redis host
       password: 'auth',
       db: 0,

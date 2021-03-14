@@ -10,7 +10,6 @@ export function validateUserIdRequiredQuery(): any {
         ctx.query,
       );
     } catch (err) {
-      console.log(err);
       throw ctx.app.errorHandler(ctx.app.Error.ERR_REQUEST_DATA, err);
     }
   };

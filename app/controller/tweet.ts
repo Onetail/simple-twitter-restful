@@ -20,8 +20,8 @@ import { errorMsg } from './docs/Res/util/httpMessage';
 import { PagenationDTO } from './dto/pagenation';
 import { TweetDTO } from './dto/tweet';
 
-@TagsAll('tweets')
-@Prefix('tweets')
+@TagsAll('tweet')
+@Prefix('tweet')
 export default class TweetController extends Controller {
   @Before([validateTweetPagenationQuery, validateUserIdRequiredQuery])
   @Get('/list')
