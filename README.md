@@ -4,6 +4,7 @@
 
 ```bash
 $ docker-compose -f docker-compose.local.yml up --build -d
+$ npm install 
 $ npm run build && npm run retest
 $ npm run dev
 $ open http://localhost:7015/docs
